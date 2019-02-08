@@ -1,0 +1,24 @@
+    x = load('C:\Users\saber\Desktop\EEG\F\F001.txt');
+    figure(1);
+    N = 0:1/173.61:(length(x)-1)/173.61
+    plot(N,x);
+    [cA cD1 cD2 cD3 cD4 cD5] = Decomposition(x);
+    figure(2);
+    subplot(6,1,1);
+    plot(abs(cD1));  
+    title('cD1 (43.4-86.8 Hz)');
+    subplot(6,1,2);
+    plot(abs(cD2));   
+    title('cD2 (21.7-43.4 Hz)');
+    subplot(6,1,3);
+    plot(abs(cD3));   
+    title('cD3 (10.8-21.7 Hz)');
+    subplot(6,1,4);
+    plot(abs(cD4));    
+    title('cD4 (5.4-10.8 Hz)');
+    subplot(6,1,5);
+    plot(abs(cD5));
+    title('cD5 (2.7-5.4 Hz)');
+    subplot(6,1,6);
+    plot(abs(cA));
+    title('cA (0-2.7 Hz)');
