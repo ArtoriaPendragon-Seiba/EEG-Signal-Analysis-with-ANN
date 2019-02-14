@@ -1,4 +1,4 @@
-function [J, grad] = nnCostFunction(nn_params, ...
+function [J grad] = nnCostFunction(nn_params, ...
                                    input_layer_size, ...
                                    hidden_layer1_size, ...
                                    hidden_layer2_size, ...
@@ -20,11 +20,10 @@ function [J, grad] = nnCostFunction(nn_params, ...
 Theta1 = reshape(nn_params(1:hidden_layer1_size * (input_layer_size + 1)), ...
                  hidden_layer1_size, (input_layer_size + 1));
 
-Theta2 = reshape(nn_params((1 + (hidden_layer1_size * (input_layer_size + 1))): ...
-                ((hidden_layer1_size * (input_layer_size + 1)) + (hidden_layer2_size * (hidden_layer1_size + 1)))), ...
-                hidden_layer2_size , (hidden_layer1_size + 1));
+Theta2 = reshape(nn_params((1 + (hidden_layer1_size * (input_layer_size + 1))):(1 + (hidden_layer1_size * (input_layer_size + 1)) ...
+                 + hidden_layer2_size * (hidden_layer1_size + 1))), hidden_layer2_size , (hidden_layer1_size + 1));
 
-Theta3 = reshape(nn_params((1 + (hidden_layer1_size * (input_layer_size + 1))+ hidden_layer2_size * (hidden_layer1_size + 1)) : end), ...
+Theta3 = reshape(nn_params((2 + (hidden_layer1_size * (input_layer_size + 1))+ hidden_layer2_size * (hidden_layer1_size + 1)) : end), ...
                 num_labels, (hidden_layer2_size +1));
             
 m = size(X, 1);
@@ -40,9 +39,8 @@ a2 = sigmoid(z2);
 a2 = [ones(size(a2,1),1),a2];
 z3 = a2 * Theta2';
 a3 = sigmoid(z3);
-a3 = [ones(size(a3,1),1),a3];
 z4 = a3 * Theta3';
-a4 = sigmoid(z4);
+a4 = sigmoid(z4)
 
 yVec = zeros(m,num_labels);
 for i = 1:m
@@ -82,10 +80,10 @@ for i = 1:m
 end
     Theta1_grad = Theta1_grad / m + lambda * [zeros(size(Theta1,1),1), Theta1(:,2:end)]/m;
     Theta2_grad = Theta2_grad / m + lambda * [zeros(size(Theta2,1),1), Theta2(:,2:end)]/m;
-    Theta3_grad = Theta3_grad / m + lambda * [zeros(size(Theta3,1),1), Theta3(:,2:end)]/m;
+    Theta3_grad = Theta3_grad / m + lambda * [zeros(size(Theta3,1),1), Theta3(:,3:end)]/m;
 
 % Unroll gradients
-grad = [Theta1_grad(:) ; Theta2_grad(:) ; Theta3_grad(:)];
+grad = [Theta1_grad(:) ; Theta2_grad(:) ; Theta3+grad];
 
 
 end

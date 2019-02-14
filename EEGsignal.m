@@ -1,6 +1,6 @@
-files = dir('C:\Users\saber\Desktop\EEG\F\*.txt');
+files = dir('.\F\*.txt');
 l = length(files);
-P = zeros(24,l*5);
+P = zeros(30,l*5);
 T1 = zeros(2,l*5);%ZONF-S
 T2 = zeros(2,l*5);%Z-S
 T3 = zeros(3,l*5);%ZO-NF-S
@@ -8,7 +8,7 @@ T4 = zeros(3,l*5);%Z-F-S
 T5 = zeros(5,l*5);%Z-O-N-F-S
 for i=1:1:l
     file_name{i}=files(i).name;
-    x = load(['C:\Users\saber\Desktop\EEG\F\' file_name{i}]);
+    x = load(['.\F\' file_name{i}]);
     [cA cD1 cD2 cD3 cD4 cD5] = Decomposition(x);
     F = FeatureCombination(cA, cD1, cD2, cD3, cD4, cD5);
     P(:,i) = F;
@@ -19,10 +19,10 @@ for i=1:1:l
     %T{1,i} = 0%'F';
     
 end
-files = dir('C:\Users\saber\Desktop\EEG\N\*.txt');
+files = dir('.\N\*.txt');
 for i=1:1:l
     file_name{i}=files(i).name;
-    x = load(['C:\Users\saber\Desktop\EEG\N\' file_name{i}]);
+    x = load(['.\N\' file_name{i}]);
     [cA cD1 cD2 cD3, cD4 cD5] = Decomposition(x);
     F = FeatureCombination(cA, cD1, cD2, cD3, cD4, cD5);
     P(:,i+100) = F;
@@ -31,10 +31,10 @@ for i=1:1:l
     T5(3,i+100) = 1;
   %  T{1,i+100} = 0%'N';
 end
-files = dir('C:\Users\saber\Desktop\EEG\O\*.txt');
+files = dir('.\O\*.txt');
 for i=1:1:l
     file_name{i}=files(i).name;
-    x = load(['C:\Users\saber\Desktop\EEG\O\' file_name{i}]);
+    x = load(['.\O\' file_name{i}]);
     [cA cD1 cD2 cD3 cD4 cD5] = Decomposition(x);
     F = FeatureCombination(cA, cD1, cD2, cD3, cD4, cD5);
     P(:,i+200) = F;
@@ -43,10 +43,10 @@ for i=1:1:l
     T5(2,i+200) = 1;
     %T{1,i+200} = 0% 'O';
 end
-files = dir('C:\Users\saber\Desktop\EEG\S\*.txt');
+files = dir('.\S\*.txt');
 for i=1:1:l
     file_name{i}=files(i).name;
-    x = load(['C:\Users\saber\Desktop\EEG\S\' file_name{i}]);
+    x = load(['.\S\' file_name{i}]);
     [cA cD1 cD2 cD3 cD4 cD5] = Decomposition(x);
     F = FeatureCombination(cA, cD1, cD2, cD3, cD4, cD5);
     P(:,i+300) = F;
@@ -57,10 +57,10 @@ for i=1:1:l
     T5(5,i+300) = 1;
     %T{1,i+300} = 1%'S';
 end
-files = dir('C:\Users\saber\Desktop\EEG\Z\*.txt');
+files = dir('.\Z\*.txt');
 for i=1:1:l
     file_name{i}=files(i).name;
-    x = load(['C:\Users\saber\Desktop\EEG\Z\' file_name{i}]);
+    x = load(['.\Z\' file_name{i}]);
     [cA cD1 cD2 cD3 cD4 cD5] = Decomposition(x);
     F = FeatureCombination(cA, cD1, cD2, cD3, cD4, cD5);
     P(:,i+400) = F;
@@ -77,3 +77,4 @@ save('Tz_s','T2');
 save('Tzo_nf_s','T3');
 save('Tzo_nf_s','T4');
 save('Tz_o_n_f_s','T5');
+fprintf('data processing completed');
