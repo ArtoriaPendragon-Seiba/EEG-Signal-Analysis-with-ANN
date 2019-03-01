@@ -1,0 +1,18 @@
+function [macroF1,microF1] = SM(predV,Yval)
+%SM Summary of this function goes here
+%   Detailed explanation goes here
+a = max(max(Yval));
+F1 = zeros(a);
+TP = Zeros(a);
+FP = zeros(a);
+FN = zeros(a);
+for i = 1:a
+    TP(i) =  sum(predV(find(predV==i)) == Yval(find(predV==i)));
+    FP(i) =  sum((predV(find(predV==i)) ~= Yval(find(predV==i))));
+    FN(i) =  sum((predV(find(predV~=i)) ~= Yval(find(predV~=i))))
+    p = TP(i) / (Tp(i)) + FP(i));
+    r = TP(i) / 
+end
+F1 = 
+end
+

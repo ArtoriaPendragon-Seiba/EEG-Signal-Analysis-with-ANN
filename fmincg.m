@@ -172,4 +172,4 @@ while i < abs(length)                                      % while not finished
     fflush(stdout);
   end
 end
-fprintf('\n');
+%fprintf('\n');

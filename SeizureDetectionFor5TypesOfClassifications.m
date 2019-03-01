@@ -28,8 +28,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
 
 
 ts = toc;
-lambda = FindTheBestLambda(input_layer_size,hidden_layer1_size,hidden_layer2_size,...
-                           num_labels,Xtrain,Ytrain,Xval,Yval);
+lambda = 0.56;
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -53,7 +52,8 @@ pred = predict(Theta1, Theta2, Theta3, Xtrain);
 
 fprintf('\nTraining Set Accuracy(ZFNO_S): %f\n', mean(double(pred == Ytrain)) * 100);
 fprintf('\nValidation Set Accuracy(ZFNO_S): %f\n', mean(double(predV == Yval)) * 100);
-
+[macroF1, microF1] = F1score(predV,Yval);
+fprintf('\nmacroF1 score is %f, microF1 score is %f', macroF1,microF1);
 save('ZFNO_S_MODEL');
 
 
@@ -91,8 +91,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
 
 
 ts = toc;
-lambda = FindTheBestLambda(input_layer_size,hidden_layer1_size,hidden_layer2_size,...
-                           num_labels,Xtrain,Ytrain,Xval,Yval);
+lambda = 1.65;
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -117,7 +116,8 @@ pred = predict(Theta1, Theta2, Theta3, Xtrain);
 fprintf('\nTraining Set Accuracy(5CLASSES): %f\n', mean(double(pred == Ytrain)) * 100);
 fprintf('\nValidation Set Accuracy(5CLASSES): %f\n', mean(double(predV == Yval)) * 100);
 save('5classes_model');
-
+[macroF1, microF1] = F1score(predV,Yval);
+fprintf('\nmacroF1 score is %f, microF1 score is %f', macroF1,microF1);
 %------------------------------------------------------------------------------
 
 clear ; 
@@ -155,8 +155,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
 
 
 ts = toc;
-lambda = FindTheBestLambda(input_layer_size,hidden_layer1_size,hidden_layer2_size,...
-                           num_labels,Xtrain,Ytrain,Xval,Yval);
+lambda = 0.7;
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -181,7 +180,8 @@ pred = predict(Theta1, Theta2, Theta3, Xtrain);
 fprintf('\nTraining Set Accuracy(FNOZS): %f\n', mean(double(pred == Ytrain)) * 100);
 fprintf('\nValidation Set Accuracy(FNOZS): %f\n', mean(double(predV == Yval)) * 100);
 save('FN_OZ_S_MODEL');
-
+[macroF1, microF1] = F1score(predV,Yval);
+fprintf('\nmacroF1 score is %f, microF1 score is %f', macroF1,microF1);
 %------------------------------------------------------------------------------
 
 clear ; 
@@ -221,8 +221,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
 
 
 ts = toc;
-lambda = FindTheBestLambda(input_layer_size,hidden_layer1_size,hidden_layer2_size,...
-                           num_labels,Xtrain,Ytrain,Xval,Yval);
+lambda = 1.1;
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -246,6 +245,8 @@ pred = predict(Theta1, Theta2, Theta3, Xtrain);
 
 fprintf('\nTraining Set Accuracy(ZS): %f\n', mean(double(pred == Ytrain)) * 100);
 fprintf('\nValidation Set Accuracy(ZS): %f\n', mean(double(predV == Yval)) * 100);
+[macroF1, microF1] = F1score(predV,Yval);
+fprintf('\nmacroF1 score is %f, microF1 score is %f', macroF1,microF1);
 save('Z_S_MODEL');
 
 %------------------------------------------------------------------------------
@@ -289,8 +290,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
 
 
 ts = toc;
-lambda = FindTheBestLambda(input_layer_size,hidden_layer1_size,hidden_layer2_size,...
-                           num_labels,Xtrain,Ytrain,Xval,Yval);
+lambda = 0.8;
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -314,4 +314,6 @@ pred = predict(Theta1, Theta2, Theta3, Xtrain);
 
 fprintf('\nTraining Set Accuracy(ZFS): %f\n', mean(double(pred == Ytrain)) * 100);
 fprintf('\nValidation Set Accuracy(ZFS): %f\n', mean(double(predV == Yval)) * 100);
-save('Z_F_S_MODEL');
+save('Z_F_S_MODEL1');
+[macroF1, microF1] = F1score(predV,Yval);
+fprintf('\nmacroF1 score is %f, microF1 score is %f', macroF1,microF1);

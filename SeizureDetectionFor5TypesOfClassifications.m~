@@ -16,7 +16,7 @@ Xtrain = S(1:400,1:30);
 Xval = S(401:end,1:30);
 Ytrain = S(1:400,31);
 Yval = S(401:end,31);
-options = optimset('MaxIter', 300);
+options = optimset('MaxIter', 350);
 
 tb = toc;
 
@@ -28,8 +28,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
 
 
 ts = toc;
-lambda = FindTheBestLambda(input_layer_size,hidden_layer1_size,hidden_layer2_size,...
-                           num_labels,Xtrain,Ytrain,Xval,Yval);
+lambda = 0.56;
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -51,9 +50,10 @@ predV = predict(Theta1, Theta2, Theta3, Xval);
 pred = predict(Theta1, Theta2, Theta3, Xtrain);
 
 
-fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == Ytrain)) * 100);
-fprintf('\nValidation Set Accuracy: %f\n', mean(double(predV == Yval)) * 100);
-
+fprintf('\nTraining Set Accuracy(ZFNO_S): %f\n', mean(double(pred == Ytrain)) * 100);
+fprintf('\nValidation Set Accuracy(ZFNO_S): %f\n', mean(double(predV == Yval)) * 100);
+[macroF1, microF1] = F1score(predV,)
+fprintf('\nmacroF1 score is %f, microF1 score is %f', )
 save('ZFNO_S_MODEL');
 
 
@@ -91,8 +91,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
 
 
 ts = toc;
-lambda = FindTheBestLambda(input_layer_size,hidden_layer1_size,hidden_layer2_size,...
-                           num_labels,Xtrain,Ytrain,Xval,Yval);
+lambda = 1.65;
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -114,8 +113,8 @@ predV = predict(Theta1, Theta2, Theta3, Xval);
 pred = predict(Theta1, Theta2, Theta3, Xtrain);
 
 
-fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == Ytrain)) * 100);
-fprintf('\nValidation Set Accuracy: %f\n', mean(double(predV == Yval)) * 100);
+fprintf('\nTraining Set Accuracy(5CLASSES): %f\n', mean(double(pred == Ytrain)) * 100);
+fprintf('\nValidation Set Accuracy(5CLASSES): %f\n', mean(double(predV == Yval)) * 100);
 save('5classes_model');
 
 %------------------------------------------------------------------------------
@@ -133,8 +132,8 @@ load('Tz_o_n_f_s.mat');
                        % 3 ==   O (healthy people with eyes closed)
                        % 4 ==   S (ictal activity)
                        % 5 ==   Z (healthy people with eyes open)
-T(T == 1 || T == 2) = 1;         % 1 ==   F, N  (seizure-free patients)
-T(T == 3 || T == 5) = 2;         % 2 ==   O,Z (healthy people)
+T(T == 1 | T == 2) = 1;         % 1 ==   F, N  (seizure-free patients)
+T(T == 3 | T == 5) = 2;         % 2 ==   O,Z (healthy people)
 T(T == 4) = 3;                   % 3 == S (ictal activity)
 S = [P',T];
 b=randperm(500);
@@ -143,7 +142,7 @@ Xtrain = S(1:400,1:30);
 Xval = S(401:end,1:30);
 Ytrain = S(1:400,31);
 Yval = S(401:end,31);
-options = optimset('MaxIter', 400);
+options = optimset('MaxIter', 350);
 
 tb = toc;
 
@@ -155,8 +154,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
 
 
 ts = toc;
-lambda = FindTheBestLambda(input_layer_size,hidden_layer1_size,hidden_layer2_size,...
-                           num_labels,Xtrain,Ytrain,Xval,Yval);
+lambda = 0.7;
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -178,8 +176,8 @@ predV = predict(Theta1, Theta2, Theta3, Xval);
 pred = predict(Theta1, Theta2, Theta3, Xtrain);
 
 
-fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == Ytrain)) * 100);
-fprintf('\nValidation Set Accuracy: %f\n', mean(double(predV == Yval)) * 100);
+fprintf('\nTraining Set Accuracy(FNOZS): %f\n', mean(double(pred == Ytrain)) * 100);
+fprintf('\nValidation Set Accuracy(FNOZS): %f\n', mean(double(predV == Yval)) * 100);
 save('FN_OZ_S_MODEL');
 
 %------------------------------------------------------------------------------
@@ -209,7 +207,7 @@ Xtrain = S(1:160,1:30);
 Xval = S(161:end,1:30);
 Ytrain = S(1:160,31);
 Yval = S(161:end,31);
-options = optimset('MaxIter', 300);
+options = optimset('MaxIter', 350);
 
 tb = toc;
 
@@ -221,8 +219,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
 
 
 ts = toc;
-lambda = FindTheBestLambda(input_layer_size,hidden_layer1_size,hidden_layer2_size,...
-                           num_labels,Xtrain,Ytrain,Xval,Yval);
+lambda = 1.1;
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -263,7 +260,7 @@ load('Tz_o_n_f_s.mat');
                        % 3 ==   O (healthy people with eyes closed)
                        % 4 ==   S (ictal activity)
                        % 5 ==   Z (healthy people with eyes open)
-T(T == 3 || T ~= 2) = 0;
+T(T == 3 | T == 2) = 0;
 T(T == 5) = 1;         % 1 ==   Z (healthy people)
 T(T == 1) = 2;         % 2 ==   F (seizure-free same hemisphere)
 T(T == 4) = 3;         % 3 == S (ictal activity)
@@ -277,7 +274,7 @@ Xtrain = S(1:240,1:30);
 Xval = S(241:end,1:30);
 Ytrain = S(1:240,31);
 Yval = S(241:end,31);
-options = optimset('MaxIter', 300);
+options = optimset('MaxIter', 350);
 
 tb = toc;
 
@@ -289,8 +286,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
 
 
 ts = toc;
-lambda = FindTheBestLambda(input_layer_size,hidden_layer1_size,hidden_layer2_size,...
-                           num_labels,Xtrain,Ytrain,Xval,Yval);
+lambda = 0.8;
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -314,4 +310,4 @@ pred = predict(Theta1, Theta2, Theta3, Xtrain);
 
 fprintf('\nTraining Set Accuracy(ZFS): %f\n', mean(double(pred == Ytrain)) * 100);
 fprintf('\nValidation Set Accuracy(ZFS): %f\n', mean(double(predV == Yval)) * 100);
-save('Z_F_S_MODEL');
+save('Z_F_S_MODEL1');
