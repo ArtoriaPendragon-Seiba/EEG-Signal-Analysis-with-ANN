@@ -25,13 +25,16 @@ TotalValidationAccuracy = zeros(10,1);
     
 
 tb = toc;
-
+for i = 1:10
 initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer1_size);
 initial_Theta2 = randInitializeWeights(hidden_layer1_size, hidden_layer2_size);
 initial_Theta3 = randInitializeWeights(hidden_layer2_size, num_labels);
 
 initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:) ; initial_Theta3(:)];
-lambda = 0;
+
+
+ts = toc;
+lambda = 0.56;
 %checkNNGradients;
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -52,14 +55,13 @@ Theta3 = reshape(nn_params((1 + (hidden_layer1_size * (input_layer_size + 1))+ h
 predV = predict(Theta1, Theta2, Theta3, Xval);
 pred = predict(Theta1, Theta2, Theta3, Xtrain);
 
-%TotalTrainingAccuracy(i) = mean(double(pred == Ytrain)) * 100;
-%TotalValidationAccuracy(i) = mean(double(predV == Yval)) * 100;
-fprintf('\n Training Set Accuracy with lambda equals to %f: %f\n', lambda , mean(double(pred == Ytrain)) * 100);
-fprintf('\n Validation Set Accuracy with lambda equals to %f: %f\n', lambda , mean(double(predV == Yval)) * 100);
+TotalTrainingAccuracy(i) = mean(double(pred == Ytrain)) * 100;
+TotalValidationAccuracy(i) = mean(double(predV == Yval)) * 100;
+
+end
 
 
-%fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == Ytrain)) * 100);
-%fprintf('\nValidation Set Accuracy: %f\n', mean(double(predV == Yval)) * 100);
-%fprintf('\nMean Training Set Accuracy: %f\n', mean(TotalTrainingAccuracy) );
-%fprintf('\nMean Validation Set Accuracy: %f\n', mean(TotalValidationAccuracy));
-fprintf('\nthe training process takes %f second\n',toc);
+
+fprintf('\nMean Training Set Accuracy: %f\n', mean(TotalTrainingAccuracy) );
+fprintf('\nMean Validation Set Accuracy: %f\n', mean(TotalValidationAccuracy));
+fprintf('\nthe training process takes %f second in total\n',toc);
